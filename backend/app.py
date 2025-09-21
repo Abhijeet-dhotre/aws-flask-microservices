@@ -3,7 +3,7 @@ import pymysql
 import os
 
 app = Flask(__name__)
-
+# Trigger CI/CD workflow
 # --- Database Configuration ---
 RDS_CONFIG = {
     'host': os.environ.get('RDS_HOST', 'database-1.ctuycmgmwnw4.ap-south-1.rds.amazonaws.com'),
