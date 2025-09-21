@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend-service:
+    build: ./backend
+    container_name: backend-api
+    # You can uncomment the ports section to directly test the API via tools like Postman
+    # ports:
+    #   - "5001:5001"
+    environment:
+      # For production, you would pass these from a secure source (e.g., AWS Secrets Manager)
+      - RDS_HOST=database-1.ctuycmgmwnw4.ap-south-1.rds.amazonaws.com
+      - RDS_USER=admin
+      - RDS_PASSWORD=abhijeet23
+      - RDS_DB=abhijeetdb
+
+  frontend-service:
+    build: ./frontend
+    container_name: frontend-ui
+    ports:
+      - "80:5000" # Map host port 80 to container port 5000
+    depends_on:
+      - backend-service # Ensures backend starts before frontend
+    environment:
+      # This tells the frontend how to reach the backend service.
+      # 'backend-service' is the name of the service defined above.
+      # Docker's internal DNS resolves this to the backend container's IP.
+      - BACKEND_URL=http://backend-service:5001
